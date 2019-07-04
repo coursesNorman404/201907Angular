@@ -24,6 +24,23 @@ app.use(compression())
 app.use(jsonBodyParser)
 app.use(urlencodedBodyParser)
 
+app.use('/api', async (req, res, next) => {
+  res.header('Access-Control-Allow-Credentials', 'true')
+  res.header('Strict-Transport-Security', 'max-age=0; includeSubDomains')
+
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Content-type,Accept,X-Custom-Header'
+  )
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH')
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end()
+  }
+  next()
+})
+
 app.use('/api', api)
 
 app.use((error, req, res, next) => {
@@ -33,7 +50,6 @@ app.use((error, req, res, next) => {
   } else {
     res.status(500).json({ message: error.message })
   }
-  
 })
 
 app.get('/', (req, res) => {

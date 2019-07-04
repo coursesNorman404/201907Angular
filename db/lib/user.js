@@ -38,10 +38,28 @@ module.exports = function setupUser (userModel, friendModel) {
       raw: true
     })
   }
+  function allFriendPending (id) {
+    return friendModel.findAll({
+      attributes: ['uid'],
+      include: [
+        {
+          attributes: ['uid', 'nick', 'email', 'subNick', 'status'],
+          model: userModel,
+          as: 'User2'
+        }
+      ],
+      where: {
+        User1Id: id,
+        status: false
+      },
+      raw: true
+    })
+  }
   return {
     createOrUpdate,
     findByUid,
     findByEmail,
-    allFriend
+    allFriend,
+    allFriendPending
   }
 }

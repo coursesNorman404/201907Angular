@@ -45,10 +45,25 @@ user.post('/login', asyncMiddleware(async (req, res) => {
     throw createError('NOT_USER')
   }
 }))
+user.patch('/:uid', asyncMiddleware(async (req, res) => {
+  debug('Patch User')
+  let user = await req.app.db.User.findByUid(req.params.uid)
+  req.body.nick = user.nick
+  user = await req.app.db.User.createOrUpdate(req.body)
+  delete user.id
+  delete user.password
+  res.json(user)
+}))
 user.get('/:uid/friend', asyncMiddleware(async (req, res) => {
   debug('Lista de Amigos')
   let user = await req.app.db.User.findByUid(req.params.uid)
   let friend = await req.app.db.User.allFriend(user.id)
+  res.json(friend)
+}))
+user.get('/:uid/friend/pending', asyncMiddleware(async (req, res) => {
+  debug('Lista de Amigos')
+  let user = await req.app.db.User.findByUid(req.params.uid)
+  let friend = await req.app.db.User.allFriendPending(user.id)
   res.json(friend)
 }))
 

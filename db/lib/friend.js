@@ -21,7 +21,13 @@ module.exports = function setupFriend (friendModel, userModel) {
       return result.toJSON()
     }
   }
+  function findByUid (uid) {
+    return friendModel.findOne({
+      where: { uid }
+    })
+  }
   return {
-    createOrUpdate
+    createOrUpdate,
+    findByUid
   }
 }
