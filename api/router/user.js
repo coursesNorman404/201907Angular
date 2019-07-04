@@ -45,5 +45,11 @@ user.post('/login', asyncMiddleware(async (req, res) => {
     throw createError('NOT_USER')
   }
 }))
+user.get('/:uid/friend', asyncMiddleware(async (req, res) => {
+  debug('Lista de Amigos')
+  let user = await req.app.db.User.findByUid(req.params.uid)
+  let friend = await req.app.db.User.allFriend(user.id)
+  res.json(friend)
+}))
 
 module.exports = user

@@ -60,7 +60,7 @@ module.exports = async function (config) {
   }
   await sequelize.authenticate()
 
-  const User = setupUser(userModel)
+  const User = setupUser(userModel, friendModel)
   const Friend = setupFriend(friendModel, userModel)
   const Chat = null
   const Group = null

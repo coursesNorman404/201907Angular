@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = function setupUser (userModel) {
+module.exports = function setupUser (userModel, friendModel) {
   async function createOrUpdate (user) {
     const cond = {
       where: {
@@ -21,9 +21,27 @@ module.exports = function setupUser (userModel) {
   function findByEmail (email) {
     return userModel.findOne({ where: { email } })
   }
+  function allFriend (id) {
+    return friendModel.findAll({
+      attributes: ['uid'],
+      include: [
+        {
+          attributes: ['uid', 'nick', 'email', 'subNick', 'status'],
+          model: userModel,
+          as: 'User2'
+        }
+      ],
+      where: {
+        User1Id: id,
+        status: true
+      },
+      raw: true
+    })
+  }
   return {
     createOrUpdate,
     findByUid,
-    findByEmail
+    findByEmail,
+    allFriend
   }
 }
