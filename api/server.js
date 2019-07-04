@@ -8,6 +8,7 @@ const bodyParser = require('body-parser')
 const db = require('db')
 
 const config = require('./config')
+const api = require('./api')
 
 const port = 8989
 const app = express()
@@ -22,6 +23,18 @@ db(config.db).then(d => {
 app.use(compression())
 app.use(jsonBodyParser)
 app.use(urlencodedBodyParser)
+
+app.use('/api', api)
+
+app.use((error, req, res, next) => {
+  debug(error)
+  if (error.status) {
+    res.status(error.status).json({ message: error.message })
+  } else {
+    res.status(500).json({ message: error.message })
+  }
+  
+})
 
 app.get('/', (req, res) => {
   res.json({ hola: 'mundo' })

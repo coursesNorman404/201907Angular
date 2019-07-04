@@ -12,6 +12,10 @@ const setupChatModel = require('./models/chat')
 const setupFriendModel = require('./models/friend')
 const setupUserToGroupModel = require('./models/userToGroup')
 
+const setupUser = require('./lib/user')
+const setupToken = require('./lib/token')
+const setupFriend = require('./lib/friend')
+
 module.exports = async function (config) {
   config = defaults(config, {
     dialect: 'sqlite',
@@ -56,11 +60,11 @@ module.exports = async function (config) {
   }
   await sequelize.authenticate()
 
-  const User = null
-  const Friend = null
+  const User = setupUser(userModel)
+  const Friend = setupFriend(friendModel, userModel)
   const Chat = null
   const Group = null
-  const Token = null
+  const Token = setupToken(tokenModel, userModel)
 
   return {
     User,
