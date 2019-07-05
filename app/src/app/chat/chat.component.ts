@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { User } from '../interfaces/user';
-import { UserService } from '../services/user.service';
+
 
 @Component({
   selector: 'app-chat',
@@ -9,22 +8,20 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-  friends: User[]
-    friendId: any
-    friend: User
-    price = 78.12345251
-    today:any = Date.now()
-  constructor(public activatedRoute: ActivatedRoute, private userService: UserService) {
-    this.friendId = this.activatedRoute.snapshot.params['uid']
-    this.friends = this.userService.getFriends()
-    this.friend = this.friends.find((record) => {
-      return record.uid == this.friendId
-    })
-    console.log(this.friend)
-
+  friendId: any
+  message: any = {}
+  chat: any = []
+  myUser: any = {}
+  zumbidoS = new Audio('assets/sound/zumbido.m4a')
+  sound = new Audio('assets/sound/new_message.m4a')
+  state = 'inicial'
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    ) {
+      
+      this.friendId = this.activatedRoute.snapshot.params['uid']
   }
-
   ngOnInit() {
+  
   }
-
 }

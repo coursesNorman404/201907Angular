@@ -1,4 +1,34 @@
-<p>chat works!</p>
-{{price | number: '1.2-2'}}<br>
-{{today | date: 'fullDate' }}<br>
-{{friend | json}}
+<div id="conversationContainer">
+	<div class="contPrinc pato45">
+		<div class="row">
+			<div class="col-xs-3 bg-grey marle-25">
+				<div class="avatarFrameOnLine ">
+					<img src="assets/img/generic_avatar.png" class=" homeAvatarPicture img-fluid">
+				</div>
+
+				<div class="avatarFrameOnLine  marto250">
+					<img src="assets/img/generic_avatar.png"class=" homeAvatarPicture img-fluid">
+				</div>
+			</div>
+			<div class="col">
+                <span><b>{{myUser.nick}} ({{myUser.status}})</b></span>
+				<div class="container">
+					<div class="chatContainer marto15">
+                        <div *ngFor="let msn of chat">
+                            <div class="exampleChat">
+                                <span><b> {{msn.nick}}</b></span>
+                                <p class="marle-25"> {{msn.message}}</p>
+                            </div>
+                        </div>
+					</div>
+					<div class="bottomChat">
+						<input id="textChat" [@textChat]='state' type="area" class="form-control areaChat" placeholder="Escribe un mensaje" [(ngModel)]="message.text" (keyup.enter)="sendMessage()">
+						<div class="marto15">
+							<img src="assets/img/zumbido.png"class="iconImage img-fluid" (click)="zumbido()">
+						</div>
+					</div> 
+				</div>
+			</div>
+		</div> 
+	</div>
+</div>

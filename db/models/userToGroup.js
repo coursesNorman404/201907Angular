@@ -6,7 +6,7 @@ const setupDatabase = require('../lib/db')
 module.exports = function setupUserToGroupModel (config) {
   const sequelize = setupDatabase(config)
 
-  return sequelize.define('UserToGroup', {
+  return sequelize.define('userToGroup', {
     active: {
       type: Sequelize.BOOLEAN,
       defaultValue: true

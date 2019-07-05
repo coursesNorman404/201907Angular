@@ -1,24 +1,18 @@
-<!-- <input type="text" placeholder="Buscar Amigo" [(ngModel)]='query' ><br>
-<b>Amigos</b>
-<ng-container *ngFor="let user of friends | search: query; let i = index">
-        <a routerLink="/chat/{{user.uid}}">{{i}}- {{user.email}} {{user.nick}}</a><br>
-</ng-container> -->
-
 <div id="homeContainer">
-    <div class="whiteHeaderClassBox">
+    <div class="whiteBorderClassBox">
         <div class="homeHeaderContainer">
             <div class="row">
                 <div class="col-md-auto">
                     <div class="avatarFrameOnline">
-                        <img src="assets/img/generic_avatar.png" alt="avatarGenerico" id="homeAvatarPicture" />
+                        <img src="assets/img/generic_avatar.png" alt="avatarGenerico" id="homeAvatarPicture"/>
                     </div>
                 </div>
                 <div class="col-md-auto">
-                    <b>Norman Torres</b>
+                    <b>{{myUser.nick}}</b>
                     <div>
-                        <span>Online</span>
+                        <span>{{myUser.status}}</span>
                         <br>
-                        <span> < Escribe un mensaje personal > </span>
+                        <span>< {{myUser.subNick || 'No subnick'}} ></span>
                     </div>
                 </div>
             </div>
@@ -27,18 +21,27 @@
     <div class="whiteContainerPadded marto15">
         <div class="row">
             <div class="col">
-                <input class="form-control" type="text" placeholder="Busca Amigo" [(ngModel)]="query">
+                <input class="form-control" type="text" placeholder="Buscar Amigo" [(ngModel)]="query">
             </div>
             <div class="col-md-auto">
                 <img src="assets/img/logo_live_add.png" class="icon">
             </div>
         </div>
+        <div *ngIf="friendsPending.length">
+            <hr>
+            <b>Solicitudes pendientes ({{friendsPending.length}})</b><br>
+            <div *ngFor = "let user of friendsPending; let i = index" class="disblo marbo5">
+                <b>{{user['User1.nick']}}</b> - {{user['User1.subNick'] || 'No subnick'}}
+                <small>{{user['User1.email']}}</small> | 
+                <button (click)="accept(user.uid)" class="btn btn-primary">Aceptar</button>
+            </div>
+        </div>
         <hr>
-        <b>Amigos {{friends.length}}/{{friends.length}}</b>
-        <div *ngFor="let user of friends | search: query" class="disblo marbo5">
+        <b>Amigos {{friends.length}}/{{friends.length}}</b><br>
+        <div *ngFor = "let user of friends | search: query; let i = index" class="disblo marbo5">
             <a routerLink="/chat/{{user.uid}}">
                 <img class="logo-conexion" src="assets/img/logo_live_{{user.status}}.png" alt="Logo Conexion">
-                <b>{{user.nick}}</b> - {{user.subNick || 'No subNick'}}
+                <b>{{user.nick}}</b> - {{user.subNick || 'No subnick'}}
                 <small>{{user.email}}</small>
             </a>
         </div>

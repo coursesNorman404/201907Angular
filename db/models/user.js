@@ -5,12 +5,11 @@ const setupDatabase = require('../lib/db')
 
 module.exports = function setupUserModel (config) {
   const sequelize = setupDatabase(config)
+
   return sequelize.define('User', {
-    uid: {
-      type: Sequelize.STRING
-    },
     nick: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      notNull: false
     },
     subNick: {
       type: Sequelize.STRING
@@ -21,10 +20,14 @@ module.exports = function setupUserModel (config) {
     email: {
       type: Sequelize.STRING
     },
-    password: {
+    status: {
+      type: Sequelize.STRING,
+      defaultValue: 'busy'
+    },
+    uid: {
       type: Sequelize.STRING
     },
-    status: {
+    password: {
       type: Sequelize.STRING
     }
   })

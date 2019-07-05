@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
-import { CookieService } from 'ngx-cookie';
+import { CookieService } from 'ngx-cookie'
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  operacion = 'login'
+  operecion: string = 'login'
   user: any = {}
   constructor(
     private userService: UserService,
@@ -17,12 +17,18 @@ export class LoginComponent implements OnInit {
     private router: Router
     ) {
       let token = this._cookie.get('token')
-      if(token){
-        this.router.navigateByUrl('/home')
-      } 
+    if (token) {
+      this.router.navigateByUrl('/home')
+    }
     }
 
   ngOnInit() {
+  }
+  register() {
+    this.userService.register(this.user).subscribe(res => {
+      this.user = {}
+      this.operecion ='login'
+    })
   }
   login(){
     this.userService.login(this.user).subscribe(res => {
@@ -30,13 +36,7 @@ export class LoginComponent implements OnInit {
       this._cookie.put('token', this.user.token)
       this._cookie.put('UserId', this.user.UserId)
       this.router.navigateByUrl('/home')
-    }, err => {
-      console.log(err)
     })
-    console.log(this.user)
-  }
-  register() {
-    console.log(this.user)
   }
 
 }

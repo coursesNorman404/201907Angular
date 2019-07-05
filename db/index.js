@@ -1,6 +1,5 @@
 'use strict'
 
-const debug = require('debug')('DB:index')
 const defaults = require('defaults')
 
 const setupDatabase = require('./lib/db')

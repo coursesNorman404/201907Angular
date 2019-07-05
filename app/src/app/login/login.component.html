@@ -2,8 +2,8 @@
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="col-md-3">
-                <div class="avatarFremeOffline marto15 marbo15">
-                    <img src="assets/img/generic_avatar.png" alt="avatarGenerico" class="avatarImage img-fluid">
+                <div class="avatarFrameOffline marto15 marbo15">
+                    <img src="assets/img/generic_avatar.png" alt="avatarGenerico" class="avatarImage img-fluid"/>
                 </div>
             </div>
         </div>
@@ -12,18 +12,19 @@
                 <div class="center">
                     <h3>Iniciar Sesion</h3>
                 </div>
-                <p *ngIf="operacion == 'register'">Ya tienes cuenta? Has <a (click)="operacion = 'login'">Login</a></p>
-                <p *ngIf="operacion == 'login'">No tienes cuenta? <a (click)="operacion = 'register'">Registrarme</a></p>
-                <div class="borderContainer">
-                    <input class="form-control marto15" type="email" placeholder="Ingresa Correo" [(ngModel)]="user.email"> 
-                    <input class="form-control marto15" type="password" placeholder="Ingresa contraseña" [(ngModel)]="user.password"> 
-                    <input *ngIf="operacion == 'register'" class="form-control marto15" type="text" placeholder="Ingresa Nick" [(ngModel)]="user.nick"> 
+                <!-- Los eventos de click ademas de llamar funciones podemos asignar directamente una sentencia -->
+                <p *ngIf="operecion =='register'">Ya tienes cuenta? Has <a (click)="operecion = 'login'">Login</a></p>
+                <p *ngIf="operecion =='login'">No tienes cuenta? <a (click)="operecion = 'register'">Registrarse</a></p>
+                <div class="borderdContainer">
+                    <input class="form-control marbo15" type="email" placeholder="Ingresa correo" [(ngModel)]="user.email">
+                    <input class="form-control marbo15" type="password" placeholder="Ingresa contraseña"  [(ngModel)]="user.password">
+                    <input *ngIf="operecion =='register'" class="form-control marbo15" type="text" placeholder="Ingresa Nick" [(ngModel)]="user.nick">
                 </div>
                 <div class="center marto15 btnS">
-                    <a  *ngIf="operacion == 'login'" class="btn btn-primary" (click)="login()">Entrar</a>
-                    <a *ngIf="operacion == 'register'" class="btn btn-primary" (click)="register()">Registrarme</a>
+                    <a *ngIf="operecion =='login'" class="btn btn-primary" (click)="login()">Entrar</a>
+                    <a *ngIf="operecion =='register'" class="btn btn-primary" (click)="register()">Registrarme</a>
                 </div>
-            </div>
+            </div>    
         </div>
     </div>
 </div>
