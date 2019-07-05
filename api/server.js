@@ -61,8 +61,25 @@ app.get('/', (req, res) => {
 
 io.on('connection', socket => {
   debug('Se conectan')
+  let previusId
+  const safeJoin = currentId => {
+    socket.leave(previusId)
+    socket.join(currentId)
+    previusId = currentId
+  }
+  socket.on('addUser', friendId => {
+    debug('Se unio usuario')
+    let f = friendId.replace(/['"']+/g, '')
+    safeJoin(f)
+  })
   socket.on('message', message => {
-    io.emit('message', message)
+    debug(message)
+    let msn = JSON.parse(message)
+    socket.to(msn.friendId).emit('message', msn)
+  })
+  socket.on('zumbido', friendId => {
+    let f = friendId.replace(/['"']+/g, '')
+    socket.to(f).emit('message', 'zumbido')
   })
 })
 

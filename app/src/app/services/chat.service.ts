@@ -14,6 +14,12 @@ export class ChatService {
         )
     }
     sendMsg(msg) {
-        this.message.next(msg)
+        this.message.next({accion: "message", message: msg})
+    }
+    addChat(uid) {
+        this.message.next({accion: "add", message: uid})
+    }
+    zumbido(friendId) {
+        this.message.next({accion: 'zumbido', message: friendId})
     }
 }

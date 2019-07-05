@@ -23,7 +23,16 @@ export class WebsocketService {
     })
     let observer = {
       next: (data: Object) => {
-        this.socket.emit("message", JSON.stringify(this.data.message))
+        this.data = data
+        if (this.data.accion === 'message') {
+          this.socket.emit("message", JSON.stringify(this.data.message))
+        }
+        if (this.data.accion === 'add') {
+          this.socket.emit("addUser", JSON.stringify(this.data.message))
+        }
+        if (this.data.accion === 'zumbido') {
+          this.socket.emit("zumbido", JSON.stringify(this.data.message))
+        }
       }
     }
     return Rx.Subject.create(observer, observable)
