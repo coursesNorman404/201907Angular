@@ -38,6 +38,13 @@ export class HomeComponent implements OnInit {
       })
     }
   }
+  addFriend() {
+    this.userServices.addFriend(this.friendEmail).subscribe(send => {
+      this.newFriend = false
+      this.friendEmail = ''
+      alert('Amigo Agregado')
+    })
+  }
   accept(uid) {
     this.userServices.accept(uid).subscribe(res => {
       this.userServices.getFriends().subscribe(friends => {

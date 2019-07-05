@@ -12,6 +12,8 @@ import { ChatComponent } from './chat/chat.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SearchPipe } from './pipes/search';
 import { MenuComponent } from './menu/menu.component';
+import { ChatService } from './services/chat.service';
+import { WebsocketService } from './services/websocket.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,7 @@ import { MenuComponent } from './menu/menu.component';
     HttpClientModule,
     CookieModule.forRoot()
   ],
-  providers: [],
+  providers: [ ChatService, WebsocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

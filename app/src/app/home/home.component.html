@@ -24,7 +24,7 @@
                 <input class="form-control" type="text" placeholder="Buscar Amigo" [(ngModel)]="query">
             </div>
             <div class="col-md-auto">
-                <img src="assets/img/logo_live_add.png" class="icon">
+                <img src="assets/img/logo_live_add.png" (click)="newFriend = true" class="icon">
             </div>
         </div>
         <div *ngIf="friendsPending.length">
@@ -47,3 +47,23 @@
         </div>
     </div>
 </div>
+
+<div *ngIf="newFriend" class="modal fade show" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Correo de nuevo Amigo</h5>
+          <button type="button" class="close" data-dismiss="modal" (click)="newFriend = false" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         <input class="form-control" type="text" [(ngModel)]="friendEmail">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="newFriend = false" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary" (click)="addFriend()">Agregar</button>
+        </div>
+      </div>
+    </div>
+  </div>

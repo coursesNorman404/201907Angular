@@ -5,6 +5,7 @@ const http = require('http')
 const express = require('express')
 const compression = require('compression')
 const bodyParser = require('body-parser')
+const socketIO = require('socket.io')
 const db = require('db')
 
 const config = require('./config')
@@ -15,11 +16,13 @@ const app = express()
 const server = http.createServer(app)
 const jsonBodyParser = bodyParser.json({ limit: '50mb' })
 const urlencodedBodyParser = bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 })
+const io = socketIO(server)
 
 db(config.db).then(d => {
   app.db = d
 }).catch(e => { debug(e) })
 
+app.io = io
 app.use(compression())
 app.use(jsonBodyParser)
 app.use(urlencodedBodyParser)
@@ -54,6 +57,13 @@ app.use((error, req, res, next) => {
 
 app.get('/', (req, res) => {
   res.json({ hola: 'mundo' })
+})
+
+io.on('connection', socket => {
+  debug('Se conectan')
+  socket.on('message', message => {
+    io.emit('message', message)
+  })
 })
 
 if (!module.parent) {
